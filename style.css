@@ -1,0 +1,23 @@
+/* Base styles for neumorphic elements */
+.container {
+    background-color: #f5f5f5; /* Adjust as needed */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.15), /* Outer shadow */
+                -4px -4px 15px rgba(255, 255, 255, 0.85); /* Inner shadow */
+  }
+  
+  input,
+  button {
+    background-color: transparent;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.1);
+    font-family: sans-serif;
+  }
+  
+  button {
+    cursor: pointer;
+  }
+  
