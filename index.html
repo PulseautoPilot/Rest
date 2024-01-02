@@ -54,7 +54,7 @@
     <form id="userForm">
         <input type="text" id="userName" placeholder="Your Name" required>
         <input type="email" id="userEmail" placeholder="Your Email" required>
-        <button type="button" onclick="saveUserData()">Submit</button>
+        <button type="button" id="submitBtn">Submit</button>
     </form>
 </div>
 
@@ -92,13 +92,20 @@
     const userPushRef = push(usersRef);
 
     set(userPushRef, {
-      name: userName,
-      email: userEmail
-    });
-
-        // Redirect to the given URL
-        window.location.href = "https://g.page/r/Caf4Eqd4wUINEB0/review";
-    }
+  name: userName,
+  email: userEmail
+}, (error) => {
+  if (error) {
+    console.error("Data could not be saved.", error);
+  } else {
+    console.log("Data saved successfully.");
+    
+    // Waiting for a slight delay before redirection
+    setTimeout(() => {
+      window.location.href = "https://g.page/r/Caf4Eqd4wUINEB0/review";
+    }, 1000);
+  }
+});
 </script>
 
 </body>
