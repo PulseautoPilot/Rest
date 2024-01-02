@@ -3,189 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neuromorphic UI</title>
+    <title>neumorphic-ui</title>
     <style>
-        /* General Reset */
-        body, h1, p, label, input, button {
+        :root {
+            --primary-bg: #EDECF2;
+            --secondary-bg: #DBDCFC;
+            --accent-color: #ED7D31;
+            --neutral-color: #3F3F3F;
+            --card-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 2px 4px 0 rgba(0, 0, 0, 0.08), 0 4px 8px 0 rgba(0, 0, 0, 0.08), 0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 16px 32px 0 rgba(0, 0, 0, 0.08), 0 32px 64px 0 rgba(0, 0, 0, 0.08);
+            --inner-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.05), inset 0 2px 4px 0 rgba(0, 0, 0, 0.08), inset 0 4px 8px 0 rgba(0, 0, 0, 0.08), inset 0 8px 16px 0 rgba(0, 0, 0, 0.08), inset 0 16px 32px 0 rgba(0, 0, 0, 0.08), inset 0 32px 64px 0 rgba(0, 0, 0, 0.08);
+        }
+
+        *, ::before, ::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         body {
-            min-height: 100vh;
-            display: grid;
-            place-items: center;
-            overflow: hidden;
-            /* Set up gradient background */
-            background: linear-gradient(to bottom right, rgb(255, 233, 137), rgb(128, 183, 255));
-        }
-
-        /* Create neuron base container */
-        .neuro-container {
-            position: relative;
-            isolation: isolate;
-            width: clamp(min(40rem, 90%), 50%, 70%);
-            aspect-ratio: 1/1;
-            border-radius: 50%;
-            background: radial-gradient(at 50% 60%, transparent 45%, white 45%, white 55%, transparent 55%);
-            filter: drop-shadow(0 0.5em 0.5em rgba(0, 0, 0, 0.2));
-        }
-
-        /* Style dendrites */
-        .neuro-container::before,
-        .neuro-container::after {
-            content: "";
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%) rotate(calc(var(--angle) * 1deg)) skewY(-10deg);
-            height: 100%;
-            width: calc(100% * var(--length));
-            border-radius: inherit;
-            background: linear-gradient(transparent 50%, rgba(255, 255, 255, 0.2) 50%);
-        }
-
-        .neuro-container::before {
-            --angle: 30;
-            --length: 0.4;
-        }
-
-        .neuro-container::after {
-            --angle: 150;
-            --length: 0.6;
-        }
-
-        /* Axon emanates from the middle top of the container */
-        .axon {
-            position: absolute;
-            z-index: -1;
-            top: 50%;
-            left: 50%;
-            width: 4px;
-            height: 5rem;
-            border-radius: 2px;
-            background: linear-gradient(darkorange, mediumslateblue);
-            transform: translate(-50%, -50%);
-            filter: drop-shadow(0 0.2em 0.1em rgba(0, 0, 0, 0.2));
-        }
-
-        /* Synapse decorations */
-        .synapse {
-            position: absolute;
-            top: 0;
-            right: -40%;
-            bottom: 0;
-            width: 40%;
-            border-left: 4px dashed lightsalmon;
-            animation: pulse 2s ease-in-out infinite alternate;
-        }
-
-        .synapse::before {
-            content: "";
-            position: absolute;
-            left: -0.75rem;
-            top: 0.75rem;
-            width: 1.5rem;
-            height: 1.5rem;
-            border-radius: 50%;
-            background: linear-gradient(mediumslateblue, darkorange);
-            opacity: 0.5;
-            animation: pulsation 2s ease-in-out infinite alternate;
-        }
-
-        /* Define animations */
-        @keyframes pulse {
-            from {transform: scale(1)}
-            to {transform: scale(1.2)}
-        }
-
-        @keyframes pulsation {
-            from {transform: translate(0, 0)}
-            to {transform: translate(-0.5rem, 0.5rem)}
-        }
-
-        /* Form Container */
-        .form-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.8);
-            padding: 1rem;
-            border-radius: 0.5rem;
+            font-family: Arial, Helvetica, sans-serif;
             display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: linear-gradient(135deg, #EDECF2, #DBDCFC);
         }
 
-        /* Input Field Styles */
-        .input-field {
-            appearance: none;
-            outline: none;
-            border: none;
-            background: transparent;
-            border-bottom: 2px solid darkgray;
-            transition: 0.2s ease-in-out;
+        main {
+            width: fit-content;
+            padding: 2rem 3rem;
+            background-color: #FAFBFD;
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
         }
 
-        .input-field:focus {
-            border-bottom: 2px solid lightblue;
-            color: black;
+        h1 {
+            font-size: 2rem;
+            font-weight: normal;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+            text-align: center;
+            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
         }
 
-        .input-field::placeholder {
-            color: gray;
-        }
-
-        /* Button Styles */
-        button {
-            appearance: none;
-            outline: none;
-            border: none;
-            background: linear-gradient(darkorange, mediumslateblue);
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            color: white;
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
             font-weight: bold;
-            transition: 0.3s ease-in-out;
+            color: var(--neutral-color);
+            text-shadow: var(--inner-shadow);
+        }
+
+        input {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            background-color: #FAFBFD;
+            box-shadow: var(--inner-shadow);
+            margin-bottom: 1rem;
+            color: var(--neutral-color);
+        }
+
+        input:-internal-autofill-selected {
+            background-color: #FAFBFD !important;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            background-color: var(--accent-color);
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: var(--inner-shadow);
         }
 
         button:hover {
-            background: linear-gradient(mediumslateblue, darkorange);
-        }
-
-        button:disabled {
-            opacity: 0.5;
-            cursor: auto;
-        }
-
-        /* Disable selection effect on axon and synapse */
-        .axon,
-        .synapse,
-        .synapse::before {
-            user-select: none;
-            touch-action: manipulation;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 2px 4px 0 rgba(0, 0, 0, 0.08), 0 4px 8px 0 rgba(0, 0, 0, 0.08), 0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 16px 32px 0 rgba(0, 0, 0, 0.08), 0 32px 64px 0 rgba(0, 0, 0, 0.08);
         }
     </style>
 </head>
 <body>
+    <main>
+        <h1>Join Our Community</h1>
+        <form action="#">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Enter your username...">
 
-<div class="neuro-container">
-    <div class="axon"></div>
-    <div class="synapse"></div>
-    <div class="form-container">
-        <h2>Welcome!</h2>
-        <p>Enter your details below:</p>
-        <form id="userForm">
-            <input type="text" id="userName" placeholder="Your Name" aria-required="true" autocomplete="off" spellcheck="false" autofocus="" class="input-field" />
-            <input type="email" id="userEmail" placeholder="Your Email" aria-required="true" autocomplete="off" spellcheck="false" class="input-field" />
-            <button type="button" id="submitBtn" disabled>Submit</button>
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="Enter your email address...">
+
+            <button type="submit">Sign Up</button>
         </form>
-    </div>
-</div>
+    </main>
 
-<script type="module">
+    <script type="module">
     // Previous JavaScript code goes here
 </script>
 
