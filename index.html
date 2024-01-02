@@ -1,19 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Neuromorphic UI</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://www.gstatic.com/firebasejs/9.20.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.20.1/firebase-database-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.20.1/firebase-auth-compat.js"></script>
-  <script src="script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neuromorphic UI</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .neuromorphic-container {
+            background: #f0f0f0;
+            box-shadow: 12px 12px 24px #c2c2c2, -12px -12px 24px #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #FFA500;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <input type="text" id="name" placeholder="Enter your name">
-    <input type="email" id="email" placeholder="Enter your email">
-    <button id="submit">Submit</button>
-  </div>
+
+<div class="neuromorphic-container">
+    <h2>Welcome!</h2>
+    <p>Enter your details below:</p>
+    <form id="userForm">
+        <input type="text" id="userName" placeholder="Your Name" required>
+        <input type="email" id="userEmail" placeholder="Your Email" required>
+        <button type="button" onclick="saveUserData()">Submit</button>
+    </form>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
+
+
+ <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"
+  
+  // Firebase configuration
+     const firebaseConfig = {
+    apiKey: "AIzaSyCHXkKpJARcp4yOHl85OPJW1pSjIG7cPf4",
+    authDomain: "data-64e03.firebaseapp.com",
+    databaseURL: "https://data-64e03-default-rtdb.firebaseio.com",
+    projectId: "data-64e03",
+    storageBucket: "data-64e03.appspot.com",
+    messagingSenderId: "523816020657",
+    appId: "1:523816020657:web:d44938c3b1e1566f075090"
+  };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Reference to the database
+    const database = firebase.database();
+
+    function saveUserData() {
+        const userName = document.getElementById('userName').value;
+        const userEmail = document.getElementById('userEmail').value;
+
+        // Save user data to Firebase
+        const userRef = database.ref('users').push();
+        userRef.set({
+            name: userName,
+            email: userEmail
+        });
+
+        // Redirect to the given URL
+        window.location.href = "https://g.page/r/Caf4Eqd4wUINEB0/review";
+    }
+</script>
+
 </body>
 </html>
-
