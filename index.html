@@ -62,23 +62,27 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
 
 
- <script type="module">
+<script type="module">
   // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"
-  
-  // Firebase configuration
-     const firebaseConfig = {
-    apiKey: "AIzaSyCHXkKpJARcp4yOHl85OPJW1pSjIG7cPf4",
-    authDomain: "data-64e03.firebaseapp.com",
-    databaseURL: "https://data-64e03-default-rtdb.firebaseio.com",
-    projectId: "data-64e03",
-    storageBucket: "data-64e03.appspot.com",
-    messagingSenderId: "523816020657",
-    appId: "1:523816020657:web:d44938c3b1e1566f075090"
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyC67E-pFVowYcc0nZKnneTpDihuoKPD7Sk",
+    authDomain: "database-12611.firebaseapp.com",
+    databaseURL: "https://database-12611-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "database-12611",
+    storageBucket: "database-12611.appspot.com",
+    messagingSenderId: "8696217216",
+    appId: "1:8696217216:web:83ff5d8b1330efe6f3f065"
   };
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
 
     // Reference to the database
     const database = firebase.database();
