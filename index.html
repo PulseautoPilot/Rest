@@ -84,15 +84,17 @@
     const database = getDatabase(app);
 
     function saveUserData() {
-        const userName = document.getElementById('userName').value;
-        const userEmail = document.getElementById('userEmail').value;
+    const userName = document.getElementById('userName').value;
+    const userEmail = document.getElementById('userEmail').value;
 
-        // Save user data to Firebase
-        const userRef = database.ref('users').push();
-        userRef.set({
-            name: userName,
-            email: userEmail
-        });
+    // Save user data to Firebase
+    const usersRef = ref(database, 'users');
+    const userPushRef = push(usersRef);
+
+    set(userPushRef, {
+      name: userName,
+      email: userEmail
+    });
 
         // Redirect to the given URL
         window.location.href = "https://g.page/r/Caf4Eqd4wUINEB0/review";
