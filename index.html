@@ -80,7 +80,7 @@
 
 
     // Reference to the database
-    const database = firebase.database();
+    const database = getDatabase(app);
 
     function saveUserData() {
         const userName = document.getElementById('userName').value;
