@@ -5,58 +5,192 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neuromorphic UI</title>
     <style>
-        body {
+        /* General Reset */
+        body, h1, p, label, input, button {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .neuromorphic-container {
-            background: #f0f0f0;
-            box-shadow: 12px 12px 24px #c2c2c2, -12px -12px 24px #ffffff;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
             box-sizing: border-box;
-            border: 1px solid #ddd;
-            border-radius: 5px;
         }
 
-        button {
-            background-color: #FFA500;
-            color: #fff;
-            padding: 10px;
+        body {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            /* Set up gradient background */
+            background: linear-gradient(to bottom right, rgb(255, 233, 137), rgb(128, 183, 255));
+        }
+
+        /* Create neuron base container */
+        .neuro-container {
+            position: relative;
+            isolation: isolate;
+            width: clamp(min(40rem, 90%), 50%, 70%);
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            background: radial-gradient(at 50% 60%, transparent 45%, white 45%, white 55%, transparent 55%);
+            filter: drop-shadow(0 0.5em 0.5em rgba(0, 0, 0, 0.2));
+        }
+
+        /* Style dendrites */
+        .neuro-container::before,
+        .neuro-container::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%) rotate(calc(var(--angle) * 1deg)) skewY(-10deg);
+            height: 100%;
+            width: calc(100% * var(--length));
+            border-radius: inherit;
+            background: linear-gradient(transparent 50%, rgba(255, 255, 255, 0.2) 50%);
+        }
+
+        .neuro-container::before {
+            --angle: 30;
+            --length: 0.4;
+        }
+
+        .neuro-container::after {
+            --angle: 150;
+            --length: 0.6;
+        }
+
+        /* Axon emanates from the middle top of the container */
+        .axon {
+            position: absolute;
+            z-index: -1;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 5rem;
+            border-radius: 2px;
+            background: linear-gradient(darkorange, mediumslateblue);
+            transform: translate(-50%, -50%);
+            filter: drop-shadow(0 0.2em 0.1em rgba(0, 0, 0, 0.2));
+        }
+
+        /* Synapse decorations */
+        .synapse {
+            position: absolute;
+            top: 0;
+            right: -40%;
+            bottom: 0;
+            width: 40%;
+            border-left: 4px dashed lightsalmon;
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+
+        .synapse::before {
+            content: "";
+            position: absolute;
+            left: -0.75rem;
+            top: 0.75rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            background: linear-gradient(mediumslateblue, darkorange);
+            opacity: 0.5;
+            animation: pulsation 2s ease-in-out infinite alternate;
+        }
+
+        /* Define animations */
+        @keyframes pulse {
+            from {transform: scale(1)}
+            to {transform: scale(1.2)}
+        }
+
+        @keyframes pulsation {
+            from {transform: translate(0, 0)}
+            to {transform: translate(-0.5rem, 0.5rem)}
+        }
+
+        /* Form Container */
+        .form-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Input Field Styles */
+        .input-field {
+            appearance: none;
+            outline: none;
             border: none;
-            border-radius: 5px;
+            background: transparent;
+            border-bottom: 2px solid darkgray;
+            transition: 0.2s ease-in-out;
+        }
+
+        .input-field:focus {
+            border-bottom: 2px solid lightblue;
+            color: black;
+        }
+
+        .input-field::placeholder {
+            color: gray;
+        }
+
+        /* Button Styles */
+        button {
+            appearance: none;
+            outline: none;
+            border: none;
+            background: linear-gradient(darkorange, mediumslateblue);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
             cursor: pointer;
-            font-size: 16px;
+            color: white;
+            font-weight: bold;
+            transition: 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background: linear-gradient(mediumslateblue, darkorange);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: auto;
+        }
+
+        /* Disable selection effect on axon and synapse */
+        .axon,
+        .synapse,
+        .synapse::before {
+            user-select: none;
+            touch-action: manipulation;
         }
     </style>
 </head>
 <body>
 
-<div class="neuromorphic-container">
-    <h2>Welcome!</h2>
-    <p>Enter your details below:</p>
-    <form id="userForm">
-        <input type="text" id="userName" placeholder="Your Name" required>
-        <input type="email" id="userEmail" placeholder="Your Email" required>
-        <button type="button" id="submitBtn">Submit</button>
-    </form>
+<div class="neuro-container">
+    <div class="axon"></div>
+    <div class="synapse"></div>
+    <div class="form-container">
+        <h2>Welcome!</h2>
+        <p>Enter your details below:</p>
+        <form id="userForm">
+            <input type="text" id="userName" placeholder="Your Name" aria-required="true" autocomplete="off" spellcheck="false" autofocus="" class="input-field" />
+            <input type="email" id="userEmail" placeholder="Your Email" aria-required="true" autocomplete="off" spellcheck="false" class="input-field" />
+            <button type="button" id="submitBtn" disabled>Submit</button>
+        </form>
+    </div>
 </div>
+
+<script type="module">
+    // Previous JavaScript code goes here
+</script>
+
+</body>
+</html>
 
 <script type="module">
   // Import the functions you need from the SDKs you need
